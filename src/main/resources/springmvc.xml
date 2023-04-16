@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <!-- 配置Controller扫描 -->
+    <context:component-scan base-package="com.example.epidemic.controller"/>
+
+
+    <!-- 配置注解驱动 -->
+    <!-- SpringMVC使用<mvc:annotation-driven>自动加载RequestMappingHandlerMapping和RequestMappingHandlerAdapter -->
+    <!-- 可以在springmvc.xml配置文件中使用<mvc:annotation-driven>替代注解处理器和适配器的配置。 -->
+    <!--这里注释掉了，因为下面的时间转换器配置了-->
+    <!--<mvc:annotation-driven/>-->
+
+    <!-- 对静态资源放行  -->
+    <mvc:default-servlet-handler/>
+    <!-- 或者如下方式也可以放行静态资源 -->
+    <!--<mvc:resources location="/css/" mapping="/css/**"/>-->
+    <!--<mvc:resources location="/js/" mapping="/js/**"/>-->
+    <!--<mvc:resources location="/fonts/" mapping="/fonts/**"/>-->
+    <!--<mvc:resources location="/images/" mapping="/fonts/**"/>-->
+    <!--<mvc:resources location="/lib/" mapping="/fonts/**"/>-->
+
+    <!-- 配置视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!-- 前缀 -->
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <!-- 后缀 -->
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!-- 配置拦截器拦截 -->
+            <mvc:mapping path="/index"/>
+            <mvc:mapping path="/admins/**"/>
+            <mvc:mapping path="/admin/**"/>
+            <mvc:mapping path="/news/**"/>
+            <mvc:mapping path="/address/**"/>
+            <mvc:mapping path="/residentAccessRecord/**"/>
+            <mvc:mapping path="/resident/**"/>
+            <mvc:mapping path="/returnees/**"/>
+            <mvc:mapping path="/visitorAccessRecord/**"/>
+            <mvc:exclude-mapping path="/admin/login"/>
+            <mvc:exclude-mapping path="/login"/>
+            <!-- 配置具体的拦截器 -->
+            <bean class="com.example.epidemic.interceptor.LoginHandlerInterceptor"/>
+
+        </mvc:interceptor>
+
+    </mvc:interceptors>
+
+
+    <!-- 配置全局异常处理器 -->
+    <bean id="customHandleException" class="com.example.epidemic.handler.CustomHandleException"/>
+
+
+    <!-- 配置注解驱动 -->
+    <mvc:annotation-driven conversion-service="conversionService" />
+
+    <!-- 时间转换器配置 -->
+    <!--是将页面提交的yyyy-MM-dd等格式字符串转成Date对象-->
+    <bean id="conversionService"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.example.epidemic.converter.DateConverter" />
+            </set>
+        </property>
+    </bean>
+
+</beans>
+	
