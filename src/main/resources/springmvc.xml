@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
@@ -54,10 +53,14 @@
             <mvc:exclude-mapping path="/admin/login"/>
             <mvc:exclude-mapping path="/login"/>
             <!-- 配置具体的拦截器 -->
-            <bean class="com.example.epidemic.interceptor.LoginHandlerInterceptor"/>
+            <bean class="com.example.epidemic.interceptor.AdminLoginHandlerInterceptor"/>
 
         </mvc:interceptor>
-
+        <mvc:interceptor>
+            <mvc:mapping path="/users/**"/>
+            <mvc:exclude-mapping path="/users/login"/>
+            <bean class="com.example.epidemic.interceptor.UserLoginHandlerInterceptor"/>
+        </mvc:interceptor>
     </mvc:interceptors>
 
 
@@ -66,7 +69,7 @@
 
 
     <!-- 配置注解驱动 -->
-    <mvc:annotation-driven conversion-service="conversionService" />
+    <mvc:annotation-driven conversion-service="conversionService"/>
 
     <!-- 时间转换器配置 -->
     <!--是将页面提交的yyyy-MM-dd等格式字符串转成Date对象-->
@@ -74,7 +77,7 @@
           class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="converters">
             <set>
-                <bean class="com.example.epidemic.converter.DateConverter" />
+                <bean class="com.example.epidemic.converter.DateConverter"/>
             </set>
         </property>
     </bean>

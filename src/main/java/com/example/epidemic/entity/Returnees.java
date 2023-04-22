@@ -20,22 +20,29 @@ public class Returnees implements Serializable {
     private String idCard;
 
     private String phone;
+    private String password;
 
     /**
-     *  体温
+     * 体温
      */
     private BigDecimal temperature;
-
     /**
-     *  返乡时间
+     * 返乡时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date returnTime;
-
     /**
-     *  从哪里返乡
+     * 从哪里返乡
      */
     private String fromPlace;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     private String addressId;
 

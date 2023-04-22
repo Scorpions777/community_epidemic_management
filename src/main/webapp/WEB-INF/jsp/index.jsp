@@ -6,7 +6,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <title>社区疫情防控管理系统</title>
+    <title>社区疫情防控管理系统（管理员端）</title>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/layui/css/layui.css">
 
@@ -21,7 +21,7 @@
 <!-- 顶部区域 -->
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">社区疫情管理系统</div>
+        <div class="layui-logo">社区疫情防控管理系统</div>
 
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
@@ -129,7 +129,32 @@
                             访客出入登记
                         </a>
                     </dd>
+                </dl>
+            </li>
 
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="javascript:;">审批管理</a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a href="#" data-url="/admins/residentAccessCheck/list" data-title="住户出入审批"
+                           data-id="301" class="site-demo-active" data-type="tabAdd">
+                            住户出入审批
+                        </a>
+                    </dd>
+
+                    <dd>
+                        <a href="#" data-url="/admins/visitorAccessCheck/list" data-title="访客出入审批"
+                           data-id="302" class="site-demo-active" data-type="tabAdd">
+                            访客出入审批
+                        </a>
+                    </dd>
+
+                    <dd>
+                        <a href="#" data-url="/admins/returneesApplyCheck/list" data-title="返乡申请审批"
+                           data-id="303" class="site-demo-active" data-type="tabAdd">
+                            返乡申请审批
+                        </a>
+                    </dd>
                 </dl>
             </li>
 
@@ -139,7 +164,7 @@
                 <dl class="layui-nav-child">
                     <dd>
                         <a href="#" data-url="/admins/profile" data-title="修改资料"
-                           data-id="301" class="site-demo-active"
+                           data-id="401" class="site-demo-active"
                            data-type="tabAdd">
                             修改资料
                         </a>
@@ -147,7 +172,7 @@
 
                     <dd>
                         <a href="#" data-url="/admins/password" data-title="修改密码"
-                           data-id="302" class="site-demo-active"
+                           data-id="402" class="site-demo-active"
                            data-type="tabAdd">
                             修改密码
                         </a>

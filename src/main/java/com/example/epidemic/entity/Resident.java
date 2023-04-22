@@ -11,6 +11,7 @@ import java.util.Date;
 public class Resident  implements Serializable {
 
     private String residentId;  // id
+    private String password;
 
     /**
      *  住户姓名
@@ -59,14 +60,22 @@ public class Resident  implements Serializable {
     private String roomNumber;
 
     /**
-     *  备注
+     * 备注
      */
     private String remark;
 
     /**
-     *  状态 1：正常。2：低风险。3：中风险。4：高风险
+     * 状态 1：正常。2：低风险。3：中风险。4：高风险
      */
     private Integer status;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getResidentId() {
         return residentId;

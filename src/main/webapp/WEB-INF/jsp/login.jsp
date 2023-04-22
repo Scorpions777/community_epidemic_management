@@ -13,10 +13,11 @@
     </script>
 
     <style>
-        body{
+        body {
             background: url("/images/loginbg.jpg");
         }
-        .window{
+
+        .window {
             width: 500px;
             position: absolute;
             margin-left: -300px;
@@ -34,20 +35,20 @@
 
 
 </head>
-<body >
+<body>
 
 
-<section >
+<section>
     <div class="window">
-        <form class="layui-form" action="" method="post" onsubmit="return false;" >
+        <form class="layui-form" action="" method="post" onsubmit="return false;">
 
 
             <div class="layui-form-item" style="text-align: center">
-                <h3 id="logoid">小区疫情防控</h3>
+                <h3 id="logoid">小区疫情防控（管理员登录入口）</h3>
             </div>
 
 
-            <div class="layui-form-item"  style="margin-top: 20px;margin-right: 100px">
+            <div class="layui-form-item" style="margin-top: 20px;margin-right: 100px">
                 <label class="layui-form-label">手机</label>
                 <div class="layui-input-block">
                     <input type="text"
@@ -76,16 +77,13 @@
             <div class="layui-form-item">
                 <div style="text-align: center">
                     <button class="layui-btn" lay-submit lay-filter="formDemo">登陆</button>
+                    <a href="/users/login">前往用户登录</a>
                 </div>
             </div>
 
-
         </form>
     </div>
-
-    </div>
 </section>
-
 
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery/jquery-3.3.1.min.js"></script>
@@ -132,8 +130,7 @@
                             function () {
                                 window.location.href = "${pageContext.request.contextPath}/index";
                             });
-                    }
-                    else {
+                    } else {
                         layer.msg(data.message)
                     }
                 }

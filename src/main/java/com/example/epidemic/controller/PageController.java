@@ -1,12 +1,8 @@
 package com.example.epidemic.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
 
 /**
  * @author
@@ -34,14 +30,20 @@ public class PageController {
         return "admins/" + page;
     }
 
-
     @RequestMapping("/admins/{path}/{page}")
     public String page4(@PathVariable String path, @PathVariable String page) {
         return "admins/" + path + "/" + page;
     }
 
+    @RequestMapping("/users/{page}")
+    public String page3(@PathVariable String page) {
+        return "users/" + page;
+    }
 
-
+    @RequestMapping("/users/{path}/{page}")
+    public String page5(@PathVariable String path, @PathVariable String page) {
+        return "users/" + path + "/" + page;
+    }
 
 
 }
