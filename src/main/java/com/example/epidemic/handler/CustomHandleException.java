@@ -18,10 +18,10 @@ import java.io.Writer;
 
 public class CustomHandleException implements HandlerExceptionResolver {
 
-
-    public ModelAndView resolveException(HttpServletRequest request,
-                                         HttpServletResponse response,
+    public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response,
                                          Object handler, Exception exception) {
+
+
         // 定义异常信息
         String msg;
 
@@ -36,6 +36,8 @@ public class CustomHandleException implements HandlerExceptionResolver {
             exception.printStackTrace(s);
             msg = out.toString();
         }
+        // 往控制台输出错误信息
+        exception.printStackTrace();
 
         // 返回错误页面，给用户友好页面显示错误信息
         ModelAndView modelAndView = new ModelAndView();
@@ -44,7 +46,6 @@ public class CustomHandleException implements HandlerExceptionResolver {
 
         return modelAndView;
     }
-
 
 
 }

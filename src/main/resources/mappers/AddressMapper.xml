@@ -68,18 +68,20 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    address_id, community_name, building_number, room_number, count, houser
+    address_id
+    , community_name, building_number, room_number, houser
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.epidemic.entity.AddressExample" >
     select
     <if test="distinct" >
       distinct
     </if>
-    <include refid="Base_Column_List" />
-    from address
+    a.*, count(r.resident_id) as count
+    from address AS a LEFT JOIN resident AS r ON a.address_id = r.address_id
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
+    GROUP BY a.address_id
     <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
