@@ -75,9 +75,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-      resident_id
-      , name, gender, id_card, phone, check_in_time, address_id, community_name,
-    building_number, room_number, remark, status, password
+    resident_id
+    , name, gender, id_card, phone, check_in_time, r.address_id, a.community_name,
+    a.building_number, a.room_number, remark, status, password
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.epidemic.entity.ResidentExample" >
     select
@@ -85,7 +85,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from resident
+    from resident as r LEFT JOIN address AS a ON a.address_id = r.address_id
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -96,7 +96,7 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from resident
+    from resident as r LEFT JOIN address AS a ON a.address_id = r.address_id
     where resident_id = #{residentId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
@@ -104,22 +104,18 @@
     where resident_id = #{residentId,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.example.epidemic.entity.ResidentExample" >
-    delete from resident
+    delete from resident as r LEFT JOIN address AS a ON a.address_id = r.address_id
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.example.epidemic.entity.Resident" >
-    insert into resident (resident_id, name, gender, 
-      id_card, phone, check_in_time, 
-      address_id, community_name, building_number, 
-      room_number, remark, status
-      )
-    values (#{residentId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, 
-      #{idCard,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{checkInTime,jdbcType=DATE}, 
-      #{addressId,jdbcType=VARCHAR}, #{communityName,jdbcType=VARCHAR}, #{buildingNumber,jdbcType=VARCHAR}, 
-      #{roomNumber,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
-      )
+    insert into resident (resident_id, name, gender,
+                          id_card, phone, check_in_time,
+                          address_id, remark, status)
+    values (#{residentId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT},
+            #{idCard,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{checkInTime,jdbcType=DATE},
+            #{addressId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.example.epidemic.entity.Resident" >
     insert into resident
@@ -144,15 +140,6 @@
       </if>
       <if test="addressId != null" >
         address_id,
-      </if>
-      <if test="communityName != null" >
-        community_name,
-      </if>
-      <if test="buildingNumber != null" >
-        building_number,
-      </if>
-      <if test="roomNumber != null" >
-        room_number,
       </if>
       <if test="remark != null" >
         remark,
@@ -183,15 +170,6 @@
       <if test="addressId != null" >
         #{addressId,jdbcType=VARCHAR},
       </if>
-      <if test="communityName != null" >
-        #{communityName,jdbcType=VARCHAR},
-      </if>
-      <if test="buildingNumber != null" >
-        #{buildingNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="roomNumber != null" >
-        #{roomNumber,jdbcType=VARCHAR},
-      </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
       </if>
@@ -201,7 +179,7 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.example.epidemic.entity.ResidentExample" resultType="java.lang.Integer" >
-    select count(*) from resident
+    select count(*) from resident as r LEFT JOIN address AS a ON a.address_id = r.address_id
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -230,15 +208,6 @@
       <if test="record.addressId != null" >
         address_id = #{record.addressId,jdbcType=VARCHAR},
       </if>
-      <if test="record.communityName != null" >
-        community_name = #{record.communityName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.buildingNumber != null" >
-        building_number = #{record.buildingNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="record.roomNumber != null" >
-        room_number = #{record.roomNumber,jdbcType=VARCHAR},
-      </if>
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
@@ -259,9 +228,6 @@
       phone = #{record.phone,jdbcType=VARCHAR},
       check_in_time = #{record.checkInTime,jdbcType=DATE},
       address_id = #{record.addressId,jdbcType=VARCHAR},
-      community_name = #{record.communityName,jdbcType=VARCHAR},
-      building_number = #{record.buildingNumber,jdbcType=VARCHAR},
-      room_number = #{record.roomNumber,jdbcType=VARCHAR},
       remark = #{record.remark,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER}
     <if test="_parameter != null" >
@@ -289,15 +255,6 @@
       <if test="addressId != null" >
         address_id = #{addressId,jdbcType=VARCHAR},
       </if>
-      <if test="communityName != null" >
-        community_name = #{communityName,jdbcType=VARCHAR},
-      </if>
-      <if test="buildingNumber != null" >
-        building_number = #{buildingNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="roomNumber != null" >
-        room_number = #{roomNumber,jdbcType=VARCHAR},
-      </if>
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
       </if>
@@ -315,9 +272,6 @@
           phone           = #{phone,jdbcType=VARCHAR},
           check_in_time   = #{checkInTime,jdbcType=DATE},
           address_id      = #{addressId,jdbcType=VARCHAR},
-          community_name  = #{communityName,jdbcType=VARCHAR},
-          building_number = #{buildingNumber,jdbcType=VARCHAR},
-          room_number     = #{roomNumber,jdbcType=VARCHAR},
           remark          = #{remark,jdbcType=VARCHAR},
           status          = #{status,jdbcType=INTEGER},
           password        = #{password,jdbcType=VARCHAR}
