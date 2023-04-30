@@ -136,21 +136,21 @@
                 <a href="javascript:;">审批管理</a>
                 <dl class="layui-nav-child">
                     <dd>
-                        <a href="#" data-url="/admins/residentAccessCheck/list" data-title="住户出入审批"
+                        <a href="#" data-url="/admins/residentAccessApply/list" data-title="住户出入审批"
                            data-id="301" class="site-demo-active" data-type="tabAdd">
                             住户出入审批
                         </a>
                     </dd>
 
                     <dd>
-                        <a href="#" data-url="/admins/visitorAccessCheck/list" data-title="访客出入审批"
+                        <a href="#" data-url="/admins/visitorAccessApply/list" data-title="访客出入审批"
                            data-id="302" class="site-demo-active" data-type="tabAdd">
                             访客出入审批
                         </a>
                     </dd>
 
                     <dd>
-                        <a href="#" data-url="/admins/returneesApplyCheck/list" data-title="返乡申请审批"
+                        <a href="#" data-url="/admins/returneesAccessApply/list" data-title="返乡申请审批"
                            data-id="303" class="site-demo-active" data-type="tabAdd">
                             返乡申请审批
                         </a>

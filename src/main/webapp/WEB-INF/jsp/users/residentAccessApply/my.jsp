@@ -19,15 +19,6 @@
 
     <script src="${pageContext.request.contextPath}/lib/layui/layui.js"></script>
 
-    <style type="text/css">
-        .layui-table-cell, .layui-table-tool-panel li {
-            overflow: hidden !important;
-            text-overflow: ellipsis !important;
-            white-space: nowrap !important
-        }
-    </style>
-
-
 </head>
 <body>
 
@@ -38,6 +29,7 @@
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
+
 
 <script type="text/html" id="toolbar">
     <div class="layui-table-tool-temp" style="float: left;padding-right: 20px;">
@@ -51,18 +43,9 @@
         <div id="refresh_btn" class="layui-inline" lay-event="refresh">
             <i class="layui-icon layui-icon-refresh-3"></i>
         </div>
-
-        <%--搜索按钮--%>
-        <div class="layui-inline" style="float:right;height:29px;" title="搜索"
-             lay-event="search">
-            <i id="search_btn" class="layui-icon layui-icon-search"></i>
-        </div>
-
-        <%--搜索框--%>
-        <input type="text" id="search_input" style="width:320px;float:right;height:30px;"
-               placeholder="输入 住户姓名/小区名称/楼号/门牌号 模糊查询" autocomplete="off" class="layui-input">
     </div>
 </script>
+
 
 <script>
 
@@ -71,11 +54,12 @@
         var layer = layui.layer;
         table.render({
             elem: '#test',    // 指定原始 table 容器的选择器或 DOM，方法渲染方式必填
-            url: '${pageContext.request.contextPath}/user/resident/list', // 请求地址
+            url: '${pageContext.request.contextPath}/residentAccessApply/my', // 请求地址
             toolbar: "#toolbar", // 表头按钮，
             title: '表格',   // 定义 table 的大标题（在文件导出等地方会用到）layui 2.4.0 新增
             // totalRow: true,  //是否开启合计行区域。layui 2.4.0 新增
             limit: 5,    // 每页显示的条数（默认：10）。值务必对应 limits 参数的选项。注意：优先级低于 page 参数中的 limit 参数
+
             limits: [5, 10, 20, 30, 40, 50, 60],  // 每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。注意：优先级低于 page 参数中的 limits 参数
 
             defaultToolbar: ['filter', 'print', 'exports'], //  头部工具栏右侧图标。
@@ -84,125 +68,95 @@
 
             cols: [[    // 	设置表头。值是一个二维数组。方法渲染方式必填
                 {
-                    field: 'residentId',
+                    field: 'applyId',
                     title: 'ID',
-                    // width: 80,
+                    width: 80,
                     sort: true
-                }
-                ,
+                },
                 {
-                    field: 'name',
-                    title: '姓名',
-                    // align: "center",
-                    edit: 'text',
+                    field: 'createTime',
+                    title: '提交时间',
+                    align: "center",
                     sort: true
-                }
-                ,
+                },
                 {
-                    field: 'idCard',
-                    title: '身份证号',
-                    // align: "center",
-                    edit: 'text',
+                    field: 'accessTime',
+                    title: '出入日期',
+                    align: "center",
                     sort: true
-                }
-                ,
+                },
                 {
                     field: '',
-                    title: '性别',
-                    // align: "center",
+                    title: '出入类型',
+                    align: "center",
+                    width: 90,
                     templet: function (d) {
                         var htm = ''
-                        switch (d.gender) {
-                            case 0:
-                                htm = "女"
-                                break;
+                        switch (d.accessType) {
                             case 1:
-                                htm = "男"
-                                break;
-                            default :
-                                htm = "未知"
-                        }
-                        return htm;
-                    }
-                }
-                ,
-                {
-                    field: 'phone',
-                    title: '手机号',
-                    // align: "center",
-                    edit: 'text',
-                    sort: true
-                }
-                ,
-
-                {
-                    field: 'checkInTime',
-                    title: '入住时间',
-                    // align: "center",
-                    edit: 'text',
-                    sort: true
-                }
-                ,
-
-                // {
-                //     field: 'addressId',
-                //     title: '地址ID',
-                //     // align: "center",
-                //     edit: 'text',
-                //     sort: true
-                // }
-                // ,
-
-                {
-                    field: 'communityName',
-                    title: '小区名称',
-                    // align: "center",
-                    edit: 'text',
-                    sort: true
-                }
-                ,
-
-                {
-                    field: 'buildingNumber',
-                    title: '楼号',
-                    // align: "center",
-                    sort: true
-                }
-                ,
-
-                {
-                    field: 'roomNumber',
-                    title: '门牌号',
-                    align: "center",
-                    sort: true
-                }
-                ,
-                {
-                    field: 'status',
-                    title: '状态',
-                    align: "center",
-                    templet: function (d) {
-                        var htm = ''
-                        switch (d.status) {
-                            case 1:
-                                htm = '<span class="layui-btn layui-btn-sm">正常</span>'
-                                break;
+                                htm = '<span class="layui-badge layui-bg-green">进</span>'
+                                break
                             case 2:
-                                htm = '<span class="layui-btn layui-btn-sm layui-btn-normal">低风险</span>'
-                                break;
-                            case 3:
-                                htm = '<span class="layui-btn layui-btn-sm layui-btn-warm">中风险</span>'
-                                break;
-                            case 4:
-                                htm = '<span class="layui-btn layui-btn-sm layui-btn-danger">高风险</span>'
-                                break;
+                                htm = '<span class="layui-badge layui-bg-blue">出</span>'
+                                break
                             default :
                                 htm = "未知"
                         }
                         return htm;
                     }
-                }
-                ,
+                },
+                {
+                    field: 'name',
+                    title: '住户姓名',
+                    align: "center",
+                    sort: true
+                },
+                {
+                    field: '',
+                    title: '体温',
+                    align: "center",
+                    width: 80,
+                    templet: function (d) {
+                        var htm = ''
+                        if (parseFloat(d.temperature) > 37) {
+                            htm = '<span class="layui-badge">' + d.temperature + '</span>'
+                        } else {
+                            htm = '<span class="layui-badge layui-bg-green">' + d.temperature + '</span>'
+                        }
+                        return htm;
+                    }
+                },
+                {
+                    field: 'place',
+                    title: '出入地点',
+                    align: "center",
+                    edit: 'text',
+                    sort: true
+                },
+                {
+                    field: 'remark',
+                    title: '备注',
+                    align: "center",
+                    edit: 'text',
+                    sort: true
+                },
+                {
+                    field: '',
+                    title: '审批状态',
+                    align: "center",
+                    width: 90,
+                    templet: function (d) {
+                        var htm = ''
+                        if (d.state > 0) {
+                            htm = '<span class="layui-badge layui-bg-green">审批通过</span>'
+                        } else if (d.state === 0) {
+                            htm = '<span class="layui-badge layui-bg-blue">待审批</span>';
+                        } else {
+                            htm = '<span class="layui-badge">未通过</span>';
+                        }
+                        return htm;
+                    }
+                },
                 {
                     field: '',
                     title: '',
@@ -210,8 +164,6 @@
                     align: "center",
                     toolbar: '#barDemo'
                 }
-
-
             ]],
             page: true,
             response: {
@@ -224,13 +176,7 @@
                     "count": res.total, //解析数据长度
                     "data": res.rows //解析数据列表
                 };
-            },
-            done: function (res, curr, count) {
-                //数据渲染完的回调。
-                //由于layui 设置了超出隐藏，所以这里改变下，以兼容操作按钮的下拉菜单
-                $(".layui-table-body, .layui-table-box, .layui-table-cell").css('overflow', 'visible');
             }
-
         });
 
         //  监听工具条(每一行最右边的 查看 修改 删除 等按钮)
@@ -238,8 +184,7 @@
             var data = obj.data;
 
             if (obj.event === 'del') {   // 点击了删除按钮
-
-                layer.confirm('真的要删除吗', function (index) {
+                layer.confirm('真的删除吗', function (index) {
                     // obj.del();
                     layer.close(index);
 
@@ -248,7 +193,7 @@
                         type: 'DELETE',
                         dataType: 'json',
                         data: data.field,
-                        url: "/resident/delete/" + data.residentId,
+                        url: "/residentAccessApply/delete/" + data.applyId,
                         success: function (data) {
                             layer.msg(
                                 data.message,
@@ -260,7 +205,7 @@
                                     // 新增数据之后，刷新表格数据
                                     table.reload('test', {
                                         // url可以不指定，会使用table.render中指定的
-                                        url: '${pageContext.request.contextPath}/resident/list',  // 因为设置了分页，所以会带上参数发请求 list-data2.json?page=1&limit=5&query= （query是下面where中定义的参数名）
+                                        url: '${pageContext.request.contextPath}/residentAccessApply/my',  // 因为设置了分页，所以会带上参数发请求 list-data2.json?page=1&limit=5&query= （query是下面where中定义的参数名）
                                         // ,methods:"post"
                                         where: {  //设定异步数据接口的额外参数
                                             // query: inputVal
@@ -292,35 +237,6 @@
         });
 
 
-        $('#search_input').bind('keypress', function (event) {
-
-            // 获取输入框的值
-            var inputVal = $('#search_input').val();
-
-            console.log(inputVal)
-
-            var content = $(this).val();
-
-            if (event.keyCode == '13') {
-                // 点击查询后，让表格重载
-                // 第一个参数：test是表格的id（可以直接在table标签上写上id属性，也可以通过 table 模块参数id指定
-                table.reload('test', {
-                    // url可以不指定，会使用table.render中指定的
-                    url: '${pageContext.request.contextPath}/resident/list'  // 因为设置了分页，所以会带上参数发请求 ?page=1&limit=5&query= （query是下面where中定义的参数名）
-                    ,
-                    // ,methods:"post"
-                    where: {  // 设定异步数据接口的额外参数
-                        query: inputVal
-                    }
-                    ,
-                    page: {
-                        curr: 1  // 重新从第 1 页开始
-                    }
-                });
-            }
-        });
-
-
         // 监听头工具栏事件（表头左边的 增加 刷新 搜索等按钮）
         table.on('toolbar(test)', function (obj) {
 
@@ -331,7 +247,7 @@
                 case 'add':  // 如果是点击了增加按钮
                     layer.open({
                         type: 2,
-                        title: "添加",
+                        title: "提交申请",
                         area: ['80%', '80%'], //  宽、高
                         fix: false,
                         maxmin: true,
@@ -339,7 +255,7 @@
                         scrollbar: true,
                         shade: 0.4,
                         skin: 'layui-layer-rim',
-                        content: ["/admins/resident/add"],
+                        content: ["/users/residentAccessApply/add"],
                         yes: function (index, layero) {
                             //do something
                             layer.close(index); //如果设定了yes回调，需进行手工关闭
@@ -354,30 +270,11 @@
                     // 第一个参数：test是表格的id（可以直接在table标签上写上id属性，也可以通过 table 模块参数id指定
                     table.reload('test', {
                         // url可以不指定，会使用table.render中指定的
-                        url: '${pageContext.request.contextPath}/resident/list',  // 因为设置了分页，所以会带上参数发请求 list-data2.json?page=1&limit=5&query= （query是下面where中定义的参数名）
+                        url: '${pageContext.request.contextPath}/residentAccessApply/my',  // 因为设置了分页，所以会带上参数发请求 list-data2.json?page=1&limit=5&query= （query是下面where中定义的参数名）
                         // ,methods:"post"
                         where: {  //设定异步数据接口的额外参数
                             query: inputVal
                         },
-                        page: {
-                            curr: 1  // 重新从第 1 页开始
-                        }
-                    });
-                    break;
-
-                case "search": // 如果是点击了搜索按钮
-
-                    // 点击查询后，让表格重载
-                    // 第一个参数：test是表格的id（可以直接在table标签上写上id属性，也可以通过 table 模块参数id指定
-                    table.reload('test', {
-                        // url可以不指定，会使用table.render中指定的
-                        url: '${pageContext.request.contextPath}/resident/list'  // 因为设置了分页，所以会带上参数发请求 ?page=1&limit=5&query= （query是下面where中定义的参数名）
-                        ,
-                        // ,methods:"post"
-                        where: {  // 设定异步数据接口的额外参数
-                            query: inputVal
-                        }
-                        ,
                         page: {
                             curr: 1  // 重新从第 1 页开始
                         }
@@ -397,30 +294,6 @@
 
             console.log(obj.data); // 所在行的所有相关数据
 
-            if (obj.data.communityName === '' || obj.data.communityName == null) {
-                layer.msg("小区名称不能为空")
-                // 修改失败，重新赋予原值
-                var old = $(this).prev().text();// 旧值
-                $(this).val(old); // 重新掰回来
-                return
-            }
-
-            if (obj.data.buildingNumber === '' || obj.data.buildingNumber == null) {
-                layer.msg("楼号不能为空")
-                // 修改失败，重新赋予原值
-                var old = $(this).prev().text();// 旧值
-                $(this).val(old); // 重新掰回来
-                return
-            }
-
-            if (obj.data.roomNumber === '' || obj.data.roomNumber == null) {
-                layer.msg("门牌号不能为空")
-                // 修改失败，重新赋予原值
-                var old = $(this).prev().text();// 旧值
-                $(this).val(old); // 重新掰回来
-                return
-            }
-
 
             // 发送修改指令
             $.ajax({
@@ -430,7 +303,7 @@
                 // data: {          // 提交部分参数时
                 //     name: obj.data.name,
                 // },
-                url: "/resident/update",   // 请求地址
+                url: "/residentAccessApply/update",   // 请求地址
                 success: function (data) {  // 成功回调函数
                     layer.msg(
                         data.message,
@@ -442,7 +315,7 @@
                             // 刷新表格数据
                             table.reload('test', {
                                 // url可以不指定，会使用table.render中指定的
-                                <%--url: '${pageContext.request.contextPath}/resident/list',--%>
+                                <%--url: '${pageContext.request.contextPath}/residentAccessApply/my',--%>
                                 // ,methods:"post"
                                 where: {  //设定异步数据接口的额外参数
                                     // query: inputVal

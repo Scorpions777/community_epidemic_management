@@ -68,20 +68,20 @@
                         </a>
                     </dd>
                     <dd>
-                        <a href="#" data-url="/users/resident/applyList" data-title="住户出入申请"
+                        <a href="#" data-url="/users/residentAccessApply/my" data-title="住户出入申请"
                            data-id="1102" class="site-demo-active" data-type="tabAdd">
                             住户出入申请
                         </a>
                     </dd>
                     <dd>
-                        <a href="#" data-url="/users/visitor/applyList" data-title="访客出入申请"
+                        <a href="#" data-url="/users/visitorAccessApply/my" data-title="访客出入申请"
                            data-id="1103" class="site-demo-active" data-type="tabAdd">
                             访客出入申请
                         </a>
                     </dd>
 
                     <dd>
-                        <a href="#" data-url="/users/returnees/list" data-title="返乡申请"
+                        <a href="#" data-url="/users/returneesAccessApply/my" data-title="返乡申请"
                            data-id="1104" class="site-demo-active" data-type="tabAdd">
                             返乡申请
                         </a>

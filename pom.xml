@@ -78,13 +78,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- 日志处理 -->
-        <!--        <dependency>-->
-        <!--            <groupId>org.slf4j</groupId>-->
-        <!--            <artifactId>slf4j-log4j12</artifactId>-->
-        <!--            <version>${slf4j.version}</version>-->
-        <!--        </dependency>-->
-
         <!-- Mybatis -->
         <dependency>
             <groupId>org.mybatis</groupId>
@@ -155,11 +148,11 @@
 
 
         <!-- JSP相关 -->
-        <!--        <dependency>-->
-        <!--            <groupId>jstl</groupId>-->
-        <!--            <artifactId>jstl</artifactId>-->
-        <!--            <version>${jstl.version}</version>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${jstl.version}</version>
+        </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
